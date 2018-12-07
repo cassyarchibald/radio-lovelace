@@ -18,13 +18,15 @@ class Track extends React.Component {
     this.playtime = props.playtime;
     this.albumart = props.albumart;
     this.playlist = props.playlist;
+    this.onGoToTopClick = props.onGoToTopClick;
   } // End of constructor
 
   onFavoriteChange = () => {
-    // Toggle favorite value in state via setstate
     this.setState({ favorite: !this.state.favorite });
     console.log(this.props);
   };
+  // Method to move the track? Have this passed down from playlist?
+  // Or maybe have onclick from track passed up to playlist?
 
   render() {
     return (
@@ -43,7 +45,10 @@ class Track extends React.Component {
         />
         <p className="track--artist">{this.artist}</p>
         <p className="track--playtime">{this.playtime}</p>
-        <button className="track--control track--to-top">
+        <button
+          className="track--control track--to-top"
+          onClick={this.onGoToTopClick}
+        >
           <span role="img" aria-label="send to top">
             🔝
           </span>
@@ -63,7 +68,8 @@ Track.propTypes = {
   artist: PropTypes.string,
   playtime: PropTypes.string,
   albumart: PropTypes.string,
-  favorite: PropTypes.bool
+  favorite: PropTypes.bool,
+  index: PropTypes.number
 };
 
 export default Track;

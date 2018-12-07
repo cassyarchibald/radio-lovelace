@@ -19,26 +19,28 @@ class Track extends React.Component {
     this.albumart = props.albumart;
   } // End of constructor
 
-  onFavoriteClick() {
+  onFavoriteChange = () => {
     // Toggle favorite value in state via setstate
-  }
+    this.setState({ favorite: !this.state.favorite });
+  };
 
   render() {
     return (
       <li className="track">
         <img
           className="track--albumart"
-          alt={`album art for ${title}`}
-          src={albumart}
+          alt={`album art for ${this.title}`}
+          src={this.albumart}
         />
-        <h3 className="track--title">{title}</h3>
+        <h3 className="track--title">{this.title}</h3>
         <input
           type="checkbox"
           className="track--favorite"
-          checked={!favorite}
+          checked={!this.state.favorite}
+          onChange={this.onFavoriteChange}
         />
-        <p className="track--artist">{artist}</p>
-        <p className="track--playtime">{playtime}</p>
+        <p className="track--artist">{this.artist}</p>
+        <p className="track--playtime">{this.playtime}</p>
         <button className="track--control track--to-top">
           <span role="img" aria-label="send to top">
             🔝

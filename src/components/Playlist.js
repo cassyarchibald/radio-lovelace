@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import './styles/Playlist.css';
+import React from "react";
+import PropTypes from "prop-types";
+import "./styles/Playlist.css";
 
-import Track from './Track';
+import Track from "./Track";
 
-const calculatePlayTime = (tracks) => {
+const calculatePlayTime = tracks => {
   let minutes = 0;
   let seconds = 0;
-  tracks.forEach((track) => {
-    const times = track.playtime.split(':');
+  tracks.forEach(track => {
+    const times = track.playtime.split(":");
     minutes += parseInt(times[0]);
     seconds += parseInt(times[1]);
   });
@@ -23,21 +23,16 @@ const calculatePlayTime = (tracks) => {
   minutes = ("" + minutes).padStart(2, "0");
 
   return `${hours}:${minutes}:${seconds}`;
-}
+};
 
-const Playlist = (props) => {
+const Playlist = props => {
   const tracks = props.tracks;
   const trackCount = tracks.length;
   const playtime = calculatePlayTime(tracks);
   const trackElements = tracks.map((track, i) => {
-    // We use "spread syntax" here to pass in all the properties of 
+    // We use "spread syntax" here to pass in all the properties of
     // the variable 'track' as props. Go look it up!
-    return (
-      <Track
-        key={i}
-        {...track}
-      />
-    );
+    return <Track key={i} playlist={props.side} {...track} />;
   });
 
   return (
@@ -46,16 +41,14 @@ const Playlist = (props) => {
       <p>
         {trackCount} tracks - {playtime}
       </p>
-      <ul className="playlist--track-list">
-        {trackElements}
-      </ul>
+      <ul className="playlist--track-list">{trackElements}</ul>
     </div>
   );
-}
+};
 
 Playlist.propTypes = {
   tracks: PropTypes.array,
-  side: PropTypes.string,
-}
+  side: PropTypes.string
+};
 
 export default Playlist;

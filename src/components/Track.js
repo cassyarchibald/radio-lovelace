@@ -17,11 +17,13 @@ class Track extends React.Component {
     this.artist = props.artist;
     this.playtime = props.playtime;
     this.albumart = props.albumart;
+    this.playlist = props.playlist;
   } // End of constructor
 
   onFavoriteChange = () => {
     // Toggle favorite value in state via setstate
     this.setState({ favorite: !this.state.favorite });
+    console.log(this.props);
   };
 
   render() {

@@ -28,7 +28,7 @@ class Track extends React.Component {
   };
   onGoToTopClick = e => {
     // Stuff here
-    console.log("The on go to top button was clicked on a track");
+    // console.log("The on go to top button was clicked on a track");
     // console.log(this.props);
     this.props.markGoToTopClickCallback(this.props.index);
   };

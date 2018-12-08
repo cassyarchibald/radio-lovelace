@@ -18,12 +18,19 @@ class Track extends React.Component {
     this.playtime = props.playtime;
     this.albumart = props.albumart;
     this.playlist = props.playlist;
-    this.onGoToTopClick = props.onGoToTopClick;
+    this.index = props.index;
+    // this.onGoToTopClick = props.markGoToTopClickCallback;
   } // End of constructor
 
   onFavoriteChange = () => {
     this.setState({ favorite: !this.state.favorite });
     console.log(this.props);
+  };
+  onGoToTopClick = e => {
+    // Stuff here
+    console.log("The on go to top button was clicked on a track");
+    // console.log(this.props);
+    this.props.markGoToTopClickCallback(this.props.index);
   };
   // Method to move the track? Have this passed down from playlist?
   // Or maybe have onclick from track passed up to playlist?

@@ -107,14 +107,15 @@ const calculatePlayTime = tracks => {
 };
 
 const Playlist = props => {
-  // const markGoToTopClick = trackIndex => {
-  //   // Have this happen when go to top is clicked
-  //   // Moves track in trackElements to the top of current playlist
-  //   console.log("CLICKED");
-  //   console.log(trackIndex);
-  //   // console.log(this);
-  // };
+  // Need to send both index and track elements up the chain
+  const onGoToTopClick = trackIndex => {
+    // Sending tracks/track index up the chain
+    props.markGoToTopClickCallback(trackIndex, props.side);
 
+    // props.markGoToTopClickCallback(props.tracks, trackIndex);
+    // props.tracks.splice(0, 0, props.tracks.splice(trackIndex, 1)[0]);
+    // console.log(props.tracks);
+  };
   const tracks = props.tracks;
   const trackCount = tracks.length;
   const playtime = calculatePlayTime(tracks);
@@ -126,22 +127,11 @@ const Playlist = props => {
         key={i}
         index={i}
         playlist={props.side}
-        markGoToTopClickCallback={props.markGoToTopClickCallback}
+        markGoToTopClickCallback={onGoToTopClick}
         {...track}
       />
     );
   });
-  // Functino from SO to move an item in an array
-  // function array_move(arr, old_index, new_index) {
-  //   if (new_index >= arr.length) {
-  //     var k = new_index - arr.length + 1;
-  //     while (k--) {
-  //       arr.push(undefined);
-  //     }
-  //   }
-  //   arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-  //   return arr;
-  // }
 
   return (
     <div className="playlist">
@@ -156,7 +146,8 @@ const Playlist = props => {
 
 Playlist.propTypes = {
   tracks: PropTypes.array,
-  side: PropTypes.string
+  side: PropTypes.string,
+  markGoToTopClickCallback: PropTypes.function
 };
 
 export default Playlist;

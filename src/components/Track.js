@@ -27,9 +27,10 @@ class Track extends React.Component {
     console.log(this.props);
   };
   onGoToTopClick = e => {
-    // Stuff here
-    // console.log("The on go to top button was clicked on a track");
+    //   // Stuff here
+    //   // console.log("The on go to top button was clicked on a track");
     // console.log(this.props);
+    // Send track index up the chain
     this.props.markGoToTopClickCallback(this.props.index);
   };
   // Method to move the track? Have this passed down from playlist?
@@ -76,7 +77,8 @@ Track.propTypes = {
   playtime: PropTypes.string,
   albumart: PropTypes.string,
   favorite: PropTypes.bool,
-  index: PropTypes.number
+  index: PropTypes.number,
+  markGoToTopClickCallback: PropTypes.function
 };
 
 export default Track;

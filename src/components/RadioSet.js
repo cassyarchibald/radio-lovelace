@@ -17,10 +17,35 @@ class RadioSet extends React.Component {
 
   markSwitchListsClick = (trackIndex, playlistSide) => {
     // Track should move to top of  opposite playlist
-    // Remove from current list
-    // Add to top of other list (similar to markGoToTopClick)
-    console.log(trackIndex);
-    console.log(playlistSide);
+    if (playlistSide === "Evening") {
+      // Add to morning tracks
+      const { morningTracks } = this.state;
+      morningTracks.unshift(this.state.eveningTracks[trackIndex]);
+      // Remove from evening playlist
+      const { eveningTracks } = this.state;
+      eveningTracks.splice(trackIndex, 1);
+
+      this.setState({
+        // Update state of evening and morning tracks
+        eveningTracks: eveningTracks,
+        morningTracks: morningTracks
+      });
+
+      // Add to morning playlist (use unshift?)
+    } else {
+      // Add to evening tracks
+      const { morningTracks } = this.state;
+      const { eveningTracks } = this.state;
+      eveningTracks.unshift(this.state.morningTracks[trackIndex]);
+      // Remove from morning playlist
+      morningTracks.splice(trackIndex, 1);
+
+      this.setState({
+        // Update state of evening and morning tracks
+        eveningTracks: eveningTracks,
+        morningTracks: morningTracks
+      });
+    }
   };
 
   markGoToTopClick = (trackIndex, playlistSide) => {

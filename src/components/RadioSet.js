@@ -76,9 +76,9 @@ class RadioSet extends React.Component {
       // State is not getting updated
       console.log(this.state.eveningTracks);
     } else {
-      const songToMove = this.state.eveningTracks[trackIndex];
+      const songToMove = this.state.morningTracks[trackIndex];
       // Create copy of array
-      const updatedMorningTracks = this.state.eveningTracks;
+      const updatedMorningTracks = this.state.morningTracks;
       // remove song
       updatedMorningTracks.splice(trackIndex, 1);
       // add song to front

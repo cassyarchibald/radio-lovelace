@@ -108,6 +108,7 @@ const calculatePlayTime = tracks => {
 
 const Playlist = props => {
   // Need to send both index and track elements up the chain
+  // Index is provided by track
   const onGoToTopClick = trackIndex => {
     // Sending tracks/track index up the chain
     props.markGoToTopClickCallback(trackIndex, props.side);
@@ -124,7 +125,7 @@ const Playlist = props => {
     // the variable 'track' as props. Go look it up!
     return (
       <Track
-        key={i}
+        key={track.id}
         index={i}
         playlist={props.side}
         markGoToTopClickCallback={onGoToTopClick}

@@ -16,33 +16,26 @@ class RadioSet extends React.Component {
         this.props.tracks.length
       )
     };
-    // PROPS
-    // this.playlists = {
-    //   morningTracks: this.props.tracks.slice(0, this.props.tracks.length / 2),
-    //   eveningTracks: this.props.tracks.slice(
-    //     this.props.tracks.length / 2,
-    //     this.props.tracks.length
-    //   )
-    // };
   } // End of constructor
   // console.log(`Radio set for ${this.props.tracks.length} tracks`);
 
   // // Moves track within array
-  array_move = (arr, old_index, new_index) => {
-    if (new_index >= arr.length) {
-      var k = new_index - arr.length + 1;
-      while (k--) {
-        arr.push(undefined);
-      }
-    }
-    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-  };
+  // array_move = (arr, old_index, new_index) => {
+  //   if (new_index >= arr.length) {
+  //     var k = new_index - arr.length + 1;
+  //     while (k--) {
+  //       arr.push(undefined);
+  //     }
+  //   }
+  //   arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+  // };
 
-  markGoToTopClick = (trackIndex, playlistSide, array_move) => {
-    console.log("in radio");
-    console.log(playlistSide);
-    console.log(trackIndex);
-    console.log(this.state);
+  markGoToTopClick = (trackIndex, playlistSide) => {
+    // Could use unshift to add to front of array
+    // Could use filter to remove from array
+    // console.log(playlistSide);
+    // console.log(trackIndex);
+    // console.log(this.state);
     // if (playlistSide === "Evening") {
     //   // this.playlist = "eveningTracks";
     //   console.log("Evening Action");
@@ -65,31 +58,34 @@ class RadioSet extends React.Component {
     //   );
     // }
     if (playlistSide === "Evening") {
-      console.log("Evening");
       // Remove item and store it
       // Then add in at first part of array
       const songToMove = this.state.eveningTracks[trackIndex];
       // Create copy of array
-      const songs = this.state.eveningTracks;
+      const updatedEveningTracks = this.state.eveningTracks;
       // remove song
-      songs.splice(trackIndex, 1);
+      updatedEveningTracks.splice(trackIndex, 1);
       // add song to front
-      songs.splice(0, 0, songToMove);
-      // Log below shows that song did move to front but this does not show rendered :(
-      console.log(songs);
+      updatedEveningTracks.splice(0, 0, songToMove);
+      // QUESTION Log below shows that song did move to front but this does not show rendered :(
+      // console.log(updatedEveningTracks);
       this.setState({
-        //Update state - remove from current index, add to top index
-        eveningTracks: songs
+        //Update state - set eveningTracks to be new songs collection
+        eveningTracks: updatedEveningTracks
       });
+      // State is not getting updated
+      console.log(this.state.eveningTracks);
     } else {
-      console.log("Morning");
+      const songToMove = this.state.eveningTracks[trackIndex];
+      // Create copy of array
+      const updatedMorningTracks = this.state.eveningTracks;
+      // remove song
+      updatedMorningTracks.splice(trackIndex, 1);
+      // add song to front
+      updatedMorningTracks.splice(0, 0, songToMove);
       this.setState({
-        // Update state
-        morningTracks: this.state.morningTracks.splice(
-          1,
-          0,
-          this.state.morningTracks.splice(0, 1)[0]
-        )
+        //Update state - set morningTracks to be new songs collection
+        morningTracks: updatedMorningTracks
       });
     }
   };

@@ -117,6 +117,9 @@ const Playlist = props => {
     // props.tracks.splice(0, 0, props.tracks.splice(trackIndex, 1)[0]);
     // console.log(props.tracks);
   };
+  const onSwitchListsClick = trackIndex => {
+    props.markSwitchListsClickCallback(trackIndex, props.side);
+  };
   const tracks = props.tracks;
   const trackCount = tracks.length;
   const playtime = calculatePlayTime(tracks);
@@ -129,6 +132,7 @@ const Playlist = props => {
         index={i}
         playlist={props.side}
         markGoToTopClickCallback={onGoToTopClick}
+        markSwitchListsClickCallback={onSwitchListsClick}
         {...track}
       />
     );
@@ -148,7 +152,8 @@ const Playlist = props => {
 Playlist.propTypes = {
   tracks: PropTypes.array,
   side: PropTypes.string,
-  markGoToTopClickCallback: PropTypes.function
+  markGoToTopClickCallback: PropTypes.func,
+  markSwitchListsClickCallback: PropTypes.func
 };
 
 export default Playlist;

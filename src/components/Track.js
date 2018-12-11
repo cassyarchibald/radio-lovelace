@@ -33,6 +33,9 @@ class Track extends React.Component {
     // Send track index up the chain
     this.props.markGoToTopClickCallback(this.props.index);
   };
+  onSwitchListsClick = e => {
+    this.props.markSwitchListsClickCallback(this.props.index);
+  };
   // Method to move the track? Have this passed down from playlist?
   // Or maybe have onclick from track passed up to playlist?
 
@@ -61,7 +64,10 @@ class Track extends React.Component {
             🔝
           </span>
         </button>
-        <button className="track--control track--switch">
+        <button
+          className="track--control track--switch"
+          onClick={this.onSwitchListsClick}
+        >
           <span role="img" aria-label="switch lists">
             ↔
           </span>

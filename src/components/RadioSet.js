@@ -14,6 +14,8 @@ class RadioSet extends React.Component {
       )
     };
   } // End of constructor
+  // Find song in playlist -
+  // Update state for that song
 
   markSwitchListsClick = (trackIndex, playlistSide) => {
     // Track should move to top of  opposite playlist
@@ -47,32 +49,86 @@ class RadioSet extends React.Component {
       });
     }
   };
+  // Refactor - listOfTracks is the list from state we are revising
+  moveToTop = (listOfTracks, trackIndex) => {
+    const trackToMove = listOfTracks[trackIndex];
+    // Create copy of array
+    const updatedListOfTracks = listOfTracks;
+    // remove song
+    updatedListOfTracks.splice(trackIndex, 1);
+    // add song to front
+    updatedListOfTracks.splice(0, 0, trackToMove);
+    // Return revised list
+    return updatedListOfTracks;
+  };
+
+  switchFavorite = (listOfTracks, trackIndex) => {
+    // Make a new track with all of old track's values
+    // Then do opposite favorite value
+    // Braces create new object
+    const newTrack = { ...listOfTracks[trackIndex] };
+    newTrack.favorite = !newTrack.favorite;
+    // Need to set the updated track
+    // TODO - Build new list and return new list
+    const newList = listOfTracks
+      .slice(0, trackIndex)
+      .concat([newTrack], listOfTracks.slice(trackIndex + 1));
+    // debugger;
+
+    // listOfTracks[trackIndex] = newTrack;
+    // Creating new list object
+    return newList;
+  };
+  // Need to make a new list object to force a render from React
+  // Slice from 0, index for prior to track
+  // track as an array element all by itself
+  // Slice from index + 1, will do the end of array automaticallu
+
+  updateTrackFavorite = (trackIndex, playlistSide) => {
+    // Update state
+    if (playlistSide === "Evening") {
+      // Evening
+      const updatedEveningTracks = this.switchFavorite(
+        this.state.eveningTracks,
+        trackIndex
+      );
+      this.setState({
+        //Update state - set eveningTracks to be new songs collection
+        eveningTracks: updatedEveningTracks
+      });
+    } else {
+      // Do morning
+      const updatedMorningTracks = this.switchFavorite(
+        this.state.morningTracks,
+        trackIndex
+      );
+      // Add moveToTop
+      this.setState({
+        //Update state - set morningTracks to be new songs collection
+        morningTracks: updatedMorningTracks
+      });
+    }
+  };
 
   markGoToTopClick = (trackIndex, playlistSide) => {
     if (playlistSide === "Evening") {
       // Remove item and store it
       // Then add in at first part of array
-      const songToMove = this.state.eveningTracks[trackIndex];
-      // Create copy of array
-      const updatedEveningTracks = this.state.eveningTracks;
-      // remove song
-      updatedEveningTracks.splice(trackIndex, 1);
-      // add song to front
-      updatedEveningTracks.splice(0, 0, songToMove);
-
+      const updatedEveningTracks = this.moveToTop(
+        this.state.eveningTracks,
+        trackIndex
+      );
       this.setState({
         //Update state - set eveningTracks to be new songs collection
         eveningTracks: updatedEveningTracks
       });
       // State is not getting updated
     } else {
-      const songToMove = this.state.morningTracks[trackIndex];
-      // Create copy of array
-      const updatedMorningTracks = this.state.morningTracks;
-      // remove song
-      updatedMorningTracks.splice(trackIndex, 1);
-      // add song to front
-      updatedMorningTracks.splice(0, 0, songToMove);
+      const updatedMorningTracks = this.moveToTop(
+        this.state.morningTracks,
+        trackIndex
+      );
+      // Add moveToTop
       this.setState({
         //Update state - set morningTracks to be new songs collection
         morningTracks: updatedMorningTracks
@@ -89,12 +145,14 @@ class RadioSet extends React.Component {
             tracks={this.state.morningTracks}
             markGoToTopClickCallback={this.markGoToTopClick}
             markSwitchListsClickCallback={this.markSwitchListsClick}
+            markUpdateTrackFavoriteCallback={this.updateTrackFavorite}
           />
           <Playlist
             side="Evening"
             tracks={this.state.eveningTracks}
             markGoToTopClickCallback={this.markGoToTopClick}
             markSwitchListsClickCallback={this.markSwitchListsClick}
+            markUpdateTrackFavoriteCallback={this.updateTrackFavorite}
           />
         </section>
       </div>

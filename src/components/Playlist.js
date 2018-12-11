@@ -112,13 +112,12 @@ const Playlist = props => {
   const onGoToTopClick = trackIndex => {
     // Sending tracks/track index up the chain
     props.markGoToTopClickCallback(trackIndex, props.side);
-
-    // props.markGoToTopClickCallback(props.tracks, trackIndex);
-    // props.tracks.splice(0, 0, props.tracks.splice(trackIndex, 1)[0]);
-    // console.log(props.tracks);
   };
   const onSwitchListsClick = trackIndex => {
     props.markSwitchListsClickCallback(trackIndex, props.side);
+  };
+  const onUpdateTrackFavoriteClick = trackIndex => {
+    props.markUpdateTrackFavoriteCallback(trackIndex, props.side);
   };
   const tracks = props.tracks;
   const trackCount = tracks.length;
@@ -133,6 +132,7 @@ const Playlist = props => {
         playlist={props.side}
         markGoToTopClickCallback={onGoToTopClick}
         markSwitchListsClickCallback={onSwitchListsClick}
+        markUpdateTrackFavoriteCallback={onUpdateTrackFavoriteClick}
         {...track}
       />
     );
@@ -153,7 +153,8 @@ Playlist.propTypes = {
   tracks: PropTypes.array,
   side: PropTypes.string,
   markGoToTopClickCallback: PropTypes.func,
-  markSwitchListsClickCallback: PropTypes.func
+  markSwitchListsClickCallback: PropTypes.func,
+  markUpdateTrackFavoriteCallback: PropTypes.func
 };
 
 export default Playlist;

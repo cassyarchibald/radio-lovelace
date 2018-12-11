@@ -22,22 +22,16 @@ class Track extends React.Component {
     // this.onGoToTopClick = props.markGoToTopClickCallback;
   } // End of constructor
 
-  onFavoriteChange = () => {
-    this.setState({ favorite: !this.state.favorite });
-    console.log(this.props);
+  onFavoriteChange = e => {
+    // this.setState({ favorite: !this.state.favorite });
+    this.props.markUpdateTrackFavoriteCallback(this.props.index);
   };
   onGoToTopClick = e => {
-    //   // Stuff here
-    //   // console.log("The on go to top button was clicked on a track");
-    // console.log(this.props);
-    // Send track index up the chain
     this.props.markGoToTopClickCallback(this.props.index);
   };
   onSwitchListsClick = e => {
     this.props.markSwitchListsClickCallback(this.props.index);
   };
-  // Method to move the track? Have this passed down from playlist?
-  // Or maybe have onclick from track passed up to playlist?
 
   render() {
     return (
@@ -51,8 +45,8 @@ class Track extends React.Component {
         <input
           type="checkbox"
           className="track--favorite"
-          checked={!this.state.favorite}
-          onChange={this.onFavoriteChange}
+          defaultChecked={!this.state.favorite}
+          onClick={this.onFavoriteChange}
         />
         <p className="track--artist">{this.artist}</p>
         <p className="track--playtime">{this.playtime}</p>
@@ -84,7 +78,8 @@ Track.propTypes = {
   albumart: PropTypes.string,
   favorite: PropTypes.bool,
   index: PropTypes.number,
-  markGoToTopClickCallback: PropTypes.function
+  markGoToTopClickCallback: PropTypes.func,
+  markUpdateTrackFavoriteCallback: PropTypes.func
 };
 
 export default Track;
